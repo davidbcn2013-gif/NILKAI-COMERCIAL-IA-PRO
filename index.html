@@ -1,14 +1,554 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#ffffff">
-  <title>NIL&KAI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>NIL&KAI · Comercial</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+  background:#f7f9fc;
+  color:#102b4e;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+.app{
+  max-width:760px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:90px;
+  background:#fff;
+}
+.header{
+  padding:18px 18px 14px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.brands{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+.brand{
+  font-family:Georgia,serif;
+  font-weight:700;
+  font-size:21px;
+  letter-spacing:.5px;
+}
+.divider{
+  width:1px;
+  height:30px;
+  background:#ccd5df;
+}
+.nil{
+  font-size:12px;
+  letter-spacing:1px;
+  color:#52657b;
+}
+.banner{
+  height:205px;
+  width:100%;
+  background:
+    radial-gradient(circle at 20% 40%,#71889a 0 8%,transparent 9%),
+    radial-gradient(circle at 72% 30%,#b9c9d2 0 10%,transparent 11%),
+    linear-gradient(135deg,#0d3155,#176b8c 48%,#b7c5ca);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+  position:relative;
+  overflow:hidden;
+}
+.banner:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,rgba(0,0,0,.35),rgba(0,0,0,.05),rgba(0,0,0,.3));
+}
+.bannerText{
+  position:relative;
+  z-index:2;
+}
+.bannerText strong{
+  display:block;
+  font-family:Georgia,serif;
+  font-size:31px;
+  letter-spacing:2px;
+}
+.bannerText span{
+  display:block;
+  margin-top:9px;
+  font-size:13px;
+  letter-spacing:3px;
+}
+.content{padding:16px}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.card{
+  min-height:112px;
+  border:1px solid #dce4ec;
+  border-radius:17px;
+  background:#fff;
+  box-shadow:0 3px 12px rgba(16,43,78,.07);
+  padding:17px;
+  text-align:left;
+  color:#102b4e;
+}
+.card.primary{
+  background:#0c4c82;
+  color:white;
+  border-color:#0c4c82;
+}
+.icon{
+  font-size:25px;
+  margin-bottom:10px;
+}
+.card strong{
+  display:block;
+  font-size:17px;
+}
+.card small{
+  display:block;
+  margin-top:6px;
+  opacity:.75;
+  line-height:1.3;
+}
+.search{
+  width:100%;
+  margin-top:14px;
+  border:1px solid #d8e1ea;
+  background:#fff;
+  border-radius:15px;
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 17px;
+  box-shadow:0 2px 9px rgba(16,43,78,.05);
+}
+.search span{font-size:22px}
+.search input{
+  border:0;
+  outline:0;
+  width:100%;
+  font-size:16px;
+  color:#102b4e;
+  background:transparent;
+}
+.section{
+  margin-top:24px;
+}
+.sectionTitle{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:11px;
+}
+.sectionTitle strong{
+  font-size:21px;
+}
+.offers{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+.offer{
+  height:150px;
+  border-radius:14px;
+  overflow:hidden;
+  position:relative;
+  color:white;
+  background:linear-gradient(145deg,#183b5d,#72a0b6);
+  display:flex;
+  align-items:flex-end;
+}
+.offer:nth-child(2){background:linear-gradient(145deg,#31586c,#a8c4cf)}
+.offer:nth-child(3){background:linear-gradient(145deg,#145174,#7a9d9c)}
+.offer div{
+  width:100%;
+  padding:11px 9px;
+  background:linear-gradient(transparent,rgba(0,0,0,.72));
+}
+.offer strong{display:block;font-size:14px}
+.offer small{font-size:11px}
+.today{
+  margin-top:18px;
+  border:1px solid #dce4ec;
+  border-radius:16px;
+  padding:17px;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  box-shadow:0 2px 9px rgba(16,43,78,.05);
+}
+.todayIcon{font-size:27px}
+.today strong{display:block}
+.today small{color:#68798d}
+.bottom{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:76px;
+  background:rgba(255,255,255,.97);
+  border-top:1px solid #e0e6ec;
+  display:flex;
+  justify-content:center;
+  z-index:20;
+}
+.bottomInner{
+  width:min(760px,100%);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+}
+.nav{
+  border:0;
+  background:none;
+  color:#64758a;
+  font-size:11px;
+}
+.nav b{
+  display:block;
+  font-size:23px;
+  margin-bottom:3px;
+}
+.nav.active{color:#0c4c82;font-weight:700}
+.page{display:none}
+.page.active{display:block}
+.panel{
+  padding:18px 16px;
+}
+.back{
+  border:0;
+  background:none;
+  color:#0c4c82;
+  padding:4px 0 18px;
+  font-weight:600;
+}
+.largeBtn{
+  width:100%;
+  border:1px solid #dce4ec;
+  background:#fff;
+  border-radius:17px;
+  padding:21px;
+  margin-bottom:12px;
+  text-align:left;
+  color:#102b4e;
+  box-shadow:0 2px 9px rgba(16,43,78,.05);
+}
+.largeBtn strong{display:block;font-size:18px}
+.largeBtn small{display:block;margin-top:5px;color:#718095}
+.menu{
+  position:fixed;
+  top:0;
+  right:-310px;
+  width:290px;
+  height:100%;
+  background:#fff;
+  z-index:50;
+  box-shadow:-8px 0 25px rgba(0,0,0,.12);
+  padding:25px 20px;
+  transition:.25s;
+}
+.menu.open{right:0}
+.menu h2{margin-top:40px}
+.menu button{
+  width:100%;
+  border:0;
+  background:#f5f7fa;
+  padding:15px;
+  border-radius:12px;
+  text-align:left;
+  margin:5px 0;
+  color:#102b4e;
+}
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.3);
+  z-index:40;
+}
+.overlay.open{display:block}
+.topMenu{
+  border:0;
+  background:none;
+  font-size:24px;
+}
+@media(max-width:420px){
+  .banner{height:180px}
+  .bannerText strong{font-size:26px}
+  .offers{gap:6px}
+  .offer{height:135px}
+  .card{padding:14px}
+}
+</style>
 </head>
 
 <body>
-  <h1>NIL&KAI</h1>
-  <p>Garcimar · GranBlau</p>
+
+<div class="app">
+
+<header class="header">
+  <div class="brands">
+    <div class="brand">GARCIMAR</div>
+    <div class="divider"></div>
+    <div class="brand">GranBlau</div>
+  </div>
+  <div class="nil">NIL&KAI</div>
+  <button class="topMenu" onclick="openMenu()">☰</button>
+</header>
+
+<main>
+
+<section id="inicio" class="page active">
+
+  <div class="banner">
+    <div class="bannerText">
+      <strong>DEL MAR<br>A LA TEVA TAULA</strong>
+      <span>CALIDAD · CONFIANZA · SERVICIO</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="grid">
+      <button class="card primary" onclick="showPage('tarifas')">
+        <div class="icon">📄</div>
+        <strong>Tarifas</strong>
+        <small>Consulta todas las tarifas</small>
+      </button>
+
+      <button class="card" onclick="showPage('generar')">
+        <div class="icon">➕</div>
+        <strong>Generar</strong>
+        <small>Crea tarifas personalizadas</small>
+      </button>
+
+      <button class="card" onclick="showPage('clientes')">
+        <div class="icon">👥</div>
+        <strong>Clientes</strong>
+        <small>Gestiona tus clientes</small>
+      </button>
+
+      <button class="card" onclick="alert('Disponible únicamente para el usuario autorizado.')">
+        <div class="icon">⬆️</div>
+        <strong>Subir tarifas</strong>
+        <small>Actualizar Excel</small>
+      </button>
+    </div>
+
+    <div class="search">
+      <span>🌐</span>
+      <input placeholder="Buscar restaurante o negocio en Google">
+    </div>
+
+    <div class="search">
+      <span>🔍</span>
+      <input id="globalSearch" placeholder="Buscar en toda la app…"
+             oninput="searchApp(this.value)">
+    </div>
+
+    <div class="section">
+      <div class="sectionTitle">
+        <strong>⭐ Oferta diaria</strong>
+      </div>
+
+      <div class="offers">
+        <div class="offer">
+          <div><strong>ATÚN SEMANAL</strong><small>Oferta semanal</small></div>
+        </div>
+        <div class="offer">
+          <div><strong>FRESCO 1</strong><small>Producto destacado</small></div>
+        </div>
+        <div class="offer">
+          <div><strong>FRESCO 2</strong><small>Producto del día</small></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="today" style="width:100%;background:white;color:#102b4e;border:1px solid #dce4ec"
+            onclick="alert('Aquí aparecerán los clientes con servicio hoy, ordenados por proximidad.')">
+      <div class="todayIcon">🚚</div>
+      <div>
+        <strong>CLIENTES CON SERVICIO HOY</strong>
+        <small>Consultar ruta de hoy</small>
+      </div>
+    </button>
+
+  </div>
+</section>
+
+<section id="tarifas" class="page">
+  <div class="panel">
+    <button class="back" onclick="showPage('inicio')">← Inicio</button>
+    <h1>Tarifas</h1>
+
+    <button class="largeBtn">
+      <strong>🐟 Tarifa Fresco</strong>
+      <small>Consulta directa de productos</small>
+    </button>
+
+    <button class="largeBtn" onclick="toggleFrozen()">
+      <strong>❄️ Tarifa Congelado ▾</strong>
+      <small>Selecciona Congelado 1–4</small>
+    </button>
+
+    <div id="frozen" style="display:none">
+      <button class="largeBtn">Congelado 1</button>
+      <button class="largeBtn">Congelado 2</button>
+      <button class="largeBtn">Congelado 3</button>
+      <button class="largeBtn">Congelado 4</button>
+    </div>
+
+    <div class="search">
+      <span>🔍</span>
+      <input placeholder="Buscar producto…">
+    </div>
+  </div>
+</section>
+
+<section id="generar" class="page">
+  <div class="panel">
+    <button class="back" onclick="showPage('inicio')">← Inicio</button>
+    <h1>Generar tarifa</h1>
+
+    <button class="largeBtn">
+      <strong>👤 Cliente existente</strong>
+      <small>Buscar por nombre o código de cliente</small>
+    </button>
+
+    <button class="largeBtn">
+      <strong>📄 Tarifa sin cliente</strong>
+      <small>Crear una tarifa independiente</small>
+    </button>
+  </div>
+</section>
+
+<section id="clientes" class="page">
+  <div class="panel">
+    <button class="back" onclick="showPage('inicio')">← Inicio</button>
+    <h1>Clientes</h1>
+
+    <button class="largeBtn">
+      <strong>＋ Nuevo cliente</strong>
+    </button>
+
+    <div class="search">
+      <span>🔍</span>
+      <input placeholder="Buscar cliente…">
+    </div>
+
+    <p style="color:#718095">
+      Aquí aparecerán los clientes del comercial.
+    </p>
+  </div>
+</section>
+
+<section id="cyc" class="page">
+  <div class="panel">
+    <button class="back" onclick="showPage('inicio')">← Inicio</button>
+    <h1>CYC</h1>
+
+    <button class="largeBtn">
+      <strong>👤 Cliente existente</strong>
+      <small>Preparar solicitud CYC</small>
+    </button>
+
+    <button class="largeBtn">
+      <strong>＋ Nuevo cliente</strong>
+      <small>Crear cliente y solicitud CYC</small>
+    </button>
+
+    <button class="largeBtn">
+      <strong>📋 CYC enviados</strong>
+      <small>Consultar solicitudes enviadas</small>
+    </button>
+  </div>
+</section>
+
+</main>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<aside class="menu" id="menu">
+  <button onclick="closeMenu()">✕ Cerrar</button>
+  <h2>Más</h2>
+  <button>👤 Mi perfil</button>
+  <button>⚙️ Ajustes</button>
+  <button>📸 Ofertas</button>
+  <button>🗑️ Papelera</button>
+  <button>📱 Instalar aplicación</button>
+  <button>🚪 Cerrar sesión</button>
+</aside>
+
+<nav class="bottom">
+  <div class="bottomInner">
+    <button class="nav active" onclick="showPage('inicio')">
+      <b>⌂</b>Inicio
+    </button>
+    <button class="nav" onclick="showPage('tarifas')">
+      <b>▤</b>Tarifas
+    </button>
+    <button class="nav" onclick="showPage('generar')">
+      <b>＋</b>Generar
+    </button>
+    <button class="nav" onclick="showPage('clientes')">
+      <b>♙</b>Clientes
+    </button>
+    <button class="nav" onclick="showPage('cyc')">
+      <b>▣</b>CYC
+    </button>
+  </div>
+</nav>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+
+  document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
+  const order=['inicio','tarifas','generar','clientes','cyc'];
+  const i=order.indexOf(id);
+  if(i>=0) document.querySelectorAll('.nav')[i].classList.add('active');
+
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleFrozen(){
+  const f=document.getElementById('frozen');
+  f.style.display=f.style.display==='none'?'block':'none';
+}
+
+function openMenu(){
+  document.getElementById('menu').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+
+function closeMenu(){
+  document.getElementById('menu').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function searchApp(value){
+  if(value.trim().length>1){
+    console.log('Búsqueda global:',value);
+  }
+}
+</script>
+
 </body>
 </html>
