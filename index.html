@@ -828,7 +828,68 @@ function saveNewClient(){
 
   alert("Cliente guardado correctamente.");
   showPage("clientes");
+  function seleccionarClienteParaTarifa(){
+  const clientes=JSON.parse(localStorage.getItem("nilkai_clientes")||"[]");
+  const s=document.getElementById("generar");
+
+  if(!clientes.length){
+    alert("Todavía no hay clientes cargados.");
+    return;
+  }
+
+  s.innerHTML=`
+    <div class="panel">
+      <button class="back" onclick="window.location.href=window.location.pathname">← Volver</button>
+      <h1>Seleccionar cliente</h1>
+
+      <div class="search">
+        🔎
+        <input id="buscarClienteTarifa"
+          placeholder="Buscar por nombre o código..."
+          oninput="filtrarClientesTarifa(this.value)">
+      </div>
+
+      <div id="listaClientesTarifa"></div>
+    </div>
+  `;
+
+  mostrarClientesTarifa(clientes);
+  showPage("generar");
 }
+
+function mostrarClientesTarifa(clientes){
+  const lista=document.getElementById("listaClientesTarifa");
+  if(!lista) return;
+
+  lista.innerHTML=clientes.map((c,i)=>`
+    <button class="largeBtn" onclick="clienteSeleccionadoParaTarifa(${i})">
+      <strong>${c.comercial||"Cliente"}</strong>
+      <small>${c.codigo||"Sin código"} · ${c.localidad||""}</small>
+    </button>
+  `).join("");
+}
+
+function filtrarClientesTarifa(texto){
+  const clientes=JSON.parse(localStorage.getItem("nilkai_clientes")||"[]");
+  const t=texto.toLowerCase();
+
+  const filtrados=clientes.filter(c=>
+    (c.comercial||"").toLowerCase().includes(t) ||
+    (c.codigo||"").toLowerCase().includes(t)
+  );
+
+  mostrarClientesTarifa(filtrados);
+}
+
+function clienteSeleccionadoParaTarifa(indice){
+  const clientes=JSON.parse(localStorage.getItem("nilkai_clientes")||"[]");
+  const cliente=clientes[indice];
+
+  localStorage.setItem("nilkai_cliente_tarifa",JSON.stringify(cliente));
+
+  alert("Cliente seleccionado: "+cliente.comercial);
+}
+
 function showPage(id){
 
 document.querySelectorAll(".page").forEach(
