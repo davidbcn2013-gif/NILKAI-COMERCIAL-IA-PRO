@@ -887,11 +887,10 @@ function clienteSeleccionadoParaTarifa(indice){
 
   localStorage.setItem("nilkai_cliente_tarifa",JSON.stringify(cliente));
 
-  alert("Cliente seleccionado: "+cliente.comercial);
-}
-
-function showPage(id){
-
+890  alert("Cliente seleccionado: "+cliente.comercial);
+891  }
+892  
+893  function showPage(id){  
 document.querySelectorAll(".page").forEach(
 p=>p.classList.remove("active")
 );
