@@ -566,7 +566,7 @@ Selecciona primero una tarifa.
 
 <h1>Clientes</h1>
 
-<button class="largeBtn">
+<button class="largeBtn" onclick="newClientForm()">
 <strong>＋ Nuevo cliente</strong>
 <small>Crear ficha de cliente</small>
 </button>
@@ -696,7 +696,118 @@ congelado4:[
 };
 
 let tarifaActual="";
+function newClientForm(){
+  const s=document.getElementById("clientes");
+  s.innerHTML=`
+    <div class="panel">
+      <button class="back" onclick="showPage('clientes')">← Volver</button>
+      <h1>Nuevo cliente</h1>
 
+      <label>Nombre comercial *</label>
+      <input id="ncComercial" placeholder="Nombre comercial">
+
+      <label>Nombre fiscal *</label>
+      <input id="ncFiscal" placeholder="Nombre fiscal">
+
+      <label>CIF / NIF *</label>
+      <input id="ncNif" placeholder="CIF / NIF">
+
+      <label>Código de cliente</label>
+      <input id="ncCodigo" placeholder="Opcional">
+
+      <label>Persona de contacto</label>
+      <input id="ncContacto" placeholder="Persona de contacto">
+
+      <label>Teléfono</label>
+      <input id="ncTelefono" type="tel" placeholder="Teléfono">
+
+      <label>Email</label>
+      <input id="ncEmail" type="email" placeholder="Email">
+
+      <h3>Dirección fiscal</h3>
+
+      <label>Dirección fiscal *</label>
+      <input id="ncFiscalDireccion" placeholder="Dirección fiscal">
+
+      <label>Localidad *</label>
+      <input id="ncLocalidad" placeholder="Localidad">
+
+      <label>Provincia *</label>
+      <input id="ncProvincia" placeholder="Provincia">
+
+      <label>Código postal *</label>
+      <input id="ncCP" inputmode="numeric" placeholder="Código postal">
+
+      <h3>Dirección del local</h3>
+
+      <label>
+        <input id="ncMismaDireccion" type="checkbox"
+          onchange="document.getElementById('ncLocalDireccion').value=this.checked?document.getElementById('ncFiscalDireccion').value:''">
+        La dirección fiscal es la misma que la del local
+      </label>
+
+      <label>Dirección local</label>
+      <input id="ncLocalDireccion" placeholder="Dirección del local">
+
+      <h3>Días de servicio</h3>
+
+      <label><input type="checkbox" value="Lun" class="ncDia"> Lunes</label>
+      <label><input type="checkbox" value="Mar" class="ncDia"> Martes</label>
+      <label><input type="checkbox" value="Mié" class="ncDia"> Miércoles</label>
+      <label><input type="checkbox" value="Jue" class="ncDia"> Jueves</label>
+      <label><input type="checkbox" value="Vie" class="ncDia"> Viernes</label>
+      <label><input type="checkbox" value="Sáb" class="ncDia"> Sábado</label>
+
+      <label>Notas</label>
+      <textarea id="ncNotas" placeholder="Notas"></textarea>
+
+      <button class="largeBtn" onclick="saveNewClient()">
+        <strong>Guardar cliente</strong>
+      </button>
+    </div>
+  `;
+}
+
+function saveNewClient(){
+  const comercial=document.getElementById("ncComercial").value.trim();
+  const fiscal=document.getElementById("ncFiscal").value.trim();
+  const nif=document.getElementById("ncNif").value.trim();
+  const fiscalDireccion=document.getElementById("ncFiscalDireccion").value.trim();
+  const localidad=document.getElementById("ncLocalidad").value.trim();
+  const provincia=document.getElementById("ncProvincia").value.trim();
+  const cp=document.getElementById("ncCP").value.trim();
+
+  if(!comercial||!fiscal||!nif||!fiscalDireccion||!localidad||!provincia||!cp){
+    alert("Completa todos los campos obligatorios.");
+    return;
+  }
+
+  const cliente={
+    id:Date.now(),
+    nombreComercial:comercial,
+    nombreFiscal:fiscal,
+    nif:nif,
+    codigo:document.getElementById("ncCodigo").value.trim(),
+    contacto:document.getElementById("ncContacto").value.trim(),
+    telefono:document.getElementById("ncTelefono").value.trim(),
+    email:document.getElementById("ncEmail").value.trim(),
+    direccionFiscal:fiscalDireccion,
+    direccionLocal:document.getElementById("ncLocalDireccion").value.trim(),
+    localidad:localidad,
+    provincia:provincia,
+    cp:cp,
+    dias:[...document.querySelectorAll(".ncDia:checked")].map(x=>x.value),
+    notas:document.getElementById("ncNotas").value.trim(),
+    creado:new Date().toISOString()
+  };
+
+  let clientes=JSON.parse(localStorage.getItem("nilkai_clientes")||"[]");
+  clientes.unshift(cliente);
+  localStorage.setItem("nilkai_clientes",JSON.stringify(clientes));
+
+  alert("Cliente guardado correctamente.");
+  showPage("clientes");
+}
 function showPage(id){
 
 document.querySelectorAll(".page").forEach(
