@@ -833,6 +833,31 @@ function saveNewClient(){
 
   alert("Cliente guardado correctamente.");
   showPage("clientes");
+  mostrarClientes();
+  function mostrarClientes(){
+  const lista=document.querySelector("#clientes .empty");
+  if(!lista) return;
+
+  const clientes=JSON.parse(
+    localStorage.getItem("nilkai_clientes") || "[]"
+  );
+
+  if(!clientes.length){
+    lista.innerHTML="Todavía no hay clientes cargados.";
+    return;
+  }
+
+  lista.className="clientList";
+
+  lista.innerHTML=clientes.map(c=>`
+    <div class="panel">
+      <strong>${c.nombreComercial || "Cliente"}</strong>
+      <small>${c.nombreFiscal || ""}</small>
+      <small>${c.telefono || ""} · ${c.localidad || ""}</small>
+      <small>${(c.dias || []).join(" · ")}</small>
+    </div>
+  `).join("");
+}
   function seleccionarClienteParaTarifa(){
   const clientes=JSON.parse(localStorage.getItem("nilkai_clientes")||"[]");
   const s=document.getElementById("generar");
