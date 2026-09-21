@@ -887,7 +887,30 @@ function saveNewClient(){
   mostrarClientesTarifa(clientes);
   showPage("generar");
 }
+function mostrarClientes(){
+  const lista=document.getElementById("listaClientes");
+  if(!lista) return;
 
+  const clientes=JSON.parse(
+    localStorage.getItem("nilkai_clientes") || "[]"
+  );
+
+  if(!clientes.length){
+    lista.innerHTML="Todavía no hay clientes cargados.";
+    return;
+  }
+
+  lista.className="clientList";
+
+  lista.innerHTML=clientes.map(c=>`
+    <div class="panel">
+      <strong>${c.nombreComercial || "Cliente"}</strong>
+      <small>${c.nombreFiscal || ""}</small>
+      <small>${c.telefono || ""} · ${c.localidad || ""}</small>
+      <small>${(c.dias || []).join(" · ")}</small>
+    </div>
+  `).join("");
+}
 function mostrarClientesTarifa(clientes){
   const lista=document.getElementById("listaClientesTarifa");
   if(!lista) return;
@@ -901,6 +924,7 @@ function mostrarClientesTarifa(clientes){
 }
 
 function filtrarClientesTarifa(texto){
+
   const clientes=JSON.parse(localStorage.getItem("nilkai_clientes")||"[]");
   const t=texto.toLowerCase();
 
