@@ -927,7 +927,7 @@ p=>p.classList.remove("active")
 );
 
 document.getElementById(id).classList.add("active");
-
+if(id==="clientes") mostrarClientes();
 const orden=["inicio","tarifas","generar","clientes","cyc"];
 
 document.querySelectorAll(".nav").forEach(
