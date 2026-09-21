@@ -602,7 +602,7 @@ Selecciona primero una tarifa.
 <input placeholder="Buscar por nombre o código…">
 </div>
 
-<div class="empty">
+<div id="listaClientes" class="empty">
 Todavía no hay clientes cargados.
 </div>
 
@@ -836,7 +836,7 @@ function saveNewClient(){
   mostrarClientes();
   }
   function mostrarClientes(){
-  const lista=document.querySelector("#clientes .empty");
+  const lista=document.getElementById("listaClientes");
   if(!lista) return;
 
   const clientes=JSON.parse(
